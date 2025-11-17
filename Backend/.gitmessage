@@ -1,0 +1,31 @@
+# PLANTILLA DE COMMITS - CONVENTIONAL COMMITS
+# --------------------------------------------------
+# TIPOS MÁS USADOS:
+# feat:      Nueva funcionalidad
+# fix:       Corrección de bugs
+# docs:      Cambios en documentación
+# style:     Formato (espacios, comas, sin cambiar código)
+# refactor:  Cambio de código sin alterar funcionalidad
+# test:      Agregar o modificar tests
+# chore:     Tareas del proyecto (build, configs, dependencias)
+# --------------------------------------------------
+
+# Escribe tu commit debajo siguiendo este formato:
+
+type(scope): mensaje corto en presente y claro
+
+# EJEMPLOS:
+# feat(auth): add login and register endpoints
+# docs(readme): update installation and usage instructions
+# fix(users): resolve null role issue on creation
+# refactor(auth): improve jwt strategy validation
+# chore: update dependencies and clean project
+
+
+-----------------------------------------
+git config --global core.editor "code --wait"
+(Uso del VSCODE)
+git config --global core.editor "notepad"
+
+Fleet
+git config --global core.editor "'C:/Users/tu usuario/AppData/Local/Programs/Fleet/fleet.exe' --wait"
