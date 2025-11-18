@@ -12,7 +12,7 @@
 
 # Escribe tu commit debajo siguiendo este formato:
 
-type(scope): mensaje corto en presente y claro
+#type(scope): mensaje corto en presente y claro
 
 # EJEMPLOS:
 # feat(auth): add login and register endpoints
@@ -22,10 +22,10 @@ type(scope): mensaje corto en presente y claro
 # chore: update dependencies and clean project
 
 
------------------------------------------
-git config --global core.editor "code --wait"
-(Uso del VSCODE)
-git config --global core.editor "notepad"
+#-----------------------------------------
+#git config --global core.editor "code --wait"
+#(Uso del VSCODE)
+#git config --global core.editor "notepad"
 
-Fleet
-git config --global core.editor "'C:/Users/tu usuario/AppData/Local/Programs/Fleet/fleet.exe' --wait"
+#Fleet
+#git config --global core.editor "'C:/Users/tu usuario/AppData/Local/Programs/Fleet/fleet.exe' --wait"
