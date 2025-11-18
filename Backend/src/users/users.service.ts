@@ -1,41 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { User, UserRole } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
+  constructor(private prisma: PrismaService) {}
 
-  private users: User[] =  [];
+  async createUser(
+    name: string,
+    email: string,
+    password: string,
+    role: UserRole = UserRole.USER,
+  ) {
 
-  async createUser(name: string,
-                   email: string,
-                   password: string,
-                   role: UserRole = UserRole.USER){
+    // Validar que el email no exista
+    const existing = await this.prisma.user.findUnique({
+      where: { email},
+    });
+
+    if(existing){
+      throw new ConflictException('EL correo ya está registrado');
+    }
 
     const hash = await bcrypt.hash(password, 10);
 
-    const newUser: User =  {
-      id: crypto.randomUUID(),
-      name,
-      email,
-      password: hash,
-      role,
-      createdAt: new Date()
-    };
-
-    this.users.push(newUser);
+    const newUser = await this.prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hash,
+        role
+      },
+    });
 
     const { password: _, ...rest } = newUser;
     return rest;
-
   }
 
-  findByEmail(email: string){
-    return this.users.find(user => user.email === email);
+  async findByEmail(email:string){
+    return this.prisma.user.findUnique({where:{email}});
   }
 
-  findById(id: string){
-    return this.users.find(user => user.id === id);
+  // Buscar por ID
+  async findById(id: number){
+    return this.prisma.user.findUnique({where:{id}});
   }
 
 

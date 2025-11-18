@@ -1,6 +1,7 @@
 export enum UserRole {
   ADMIN = 'admin',
   USER = 'user',
+  PARENT = 'parent',
 }
 
 export class User {

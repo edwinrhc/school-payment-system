@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserRole } from '../users/entities/user.entity';
+import { User, UserRole } from '../users/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -16,7 +16,10 @@ export class AuthController {
       role?: string;
     },
   ) {
-    const role = body.role === 'admin' ? UserRole.ADMIN : UserRole.USER;
+    const role =
+      body.role === 'admin'
+        ? UserRole.ADMIN : UserRole.USER === 'user'
+        ? UserRole.USER : UserRole.PARENT;
 
     return this.authService.register(
       body.name,

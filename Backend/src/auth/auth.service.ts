@@ -6,26 +6,34 @@ import { UserRole } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
-
   constructor(
     private readonly usersService: UsersService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
-  async register(name: string, email: string, password: string, role: UserRole = UserRole.USER){
-    const user = await this.usersService.createUser(name, email, password,role);
+  async register(
+    name: string,
+    email: string,
+    password: string,
+    role: UserRole = UserRole.USER,
+  ) {
+    const user = await this.usersService.createUser(
+      name,
+      email,
+      password,
+      role,
+    );
     return user;
   }
 
-
-  async login(email: string, password: string){
-    const user = this.usersService.findByEmail(email);
-    if(!user) throw new UnauthorizedException('Credenciales inválidas');
+  async login(email: string, password: string) {
+    const user = await this.usersService.findByEmail(email);
+    if (!user) throw new UnauthorizedException('Credenciales inválidas');
 
     const check = await bcrypt.compare(password, user.password);
-    if(!check) throw new UnauthorizedException('Credenciales inválidas');
+    if (!check) throw new UnauthorizedException('Credenciales inválidas');
 
-    const payload = { sub: user.id, role: user.role};
+    const payload = { sub: user.id, role: user.role };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
@@ -33,10 +41,8 @@ export class AuthService {
         id: user.id,
         name: user.name,
         email: user.email,
-        role: user.role
-      }
+        role: user.role,
+      },
     };
   }
-
-
 }
