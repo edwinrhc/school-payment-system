@@ -1,6 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { User, UserRole } from '../users/entities/user.entity';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -19,7 +20,7 @@ export class AuthController {
     const role =
       body.role === 'admin'
         ? UserRole.ADMIN : UserRole.USER === 'user'
-        ? UserRole.USER : UserRole.PARENT;
+          ? UserRole.USER : UserRole.PARENT;
 
     return this.authService.register(
       body.name,
@@ -30,6 +31,9 @@ export class AuthController {
   }
 
   @Post('login')
+  @ApiOperation({ summary: 'Iniciar sesión' })
+  @ApiResponse({ status: 200, description: 'Login exitoso' })
+  @ApiResponse({ status: 401, description: 'Credenciales inválidas' })
   login(@Body() body: { email: string; password: string }) {
     return this.authService.login(body.email, body.password);
   }
