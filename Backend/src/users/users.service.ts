@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { User, UserRole } from './entities/user.entity';
@@ -11,19 +12,23 @@ import { PrismaService } from '../prisma/prisma.service';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
+  // Nota: Solo Login
+  async findByEmailInternal(email: string) {
+    return this.prisma.user.findUnique({ where: { email } });
+  }
+
   async createUser(
     name: string,
     email: string,
     password: string,
     role: UserRole = UserRole.USER,
   ) {
-
     // Validar que el email no exista
     const existing = await this.prisma.user.findUnique({
-      where: { email},
+      where: { email },
     });
 
-    if(existing){
+    if (existing) {
       throw new ConflictException('EL correo ya está registrado');
     }
 
@@ -34,7 +39,7 @@ export class UsersService {
         name,
         email,
         password: hash,
-        role
+        role,
       },
     });
 
@@ -42,14 +47,53 @@ export class UsersService {
     return rest;
   }
 
-  async findByEmail(email:string){
-    return this.prisma.user.findUnique({where:{email}});
+  findAll() {
+    return this.prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+        isActive: true,
+      },
+    });
+  }
+
+  //Nota: Uso general sin password
+  findByEmail(email: string) {
+    return this.prisma.user.findUnique({
+      where: { email },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+        // sin password
+      },
+    });
   }
 
   // Buscar por ID
-  async findById(id: number){
-    return this.prisma.user.findUnique({where:{id}});
+  async findOne(id: number) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException(`Usuario con ID ${id} no encontrado`);
+    }
+
+    return user;
   }
-
-
 }
