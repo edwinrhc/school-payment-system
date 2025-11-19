@@ -21,6 +21,9 @@ model User {
   isActive  Boolean  @default(true)
 
   students Student[]
+
+  resetToken          String? // Para recuperar contraseña
+  resetTokenExpiresAt DateTime? // Caducidad del token
 }
 
 model Student {
