@@ -10,8 +10,16 @@ import {
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/CreateStudentDto';
 import { UpdateStudentDto } from './dto/UpdateStudentDto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+
+@ApiTags('Students')
+@ApiBearerAuth()
 @Controller('students')
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
@@ -39,13 +47,13 @@ export class StudentsController {
     return this.studentsService.findOne(+id);
   }
 
-  @Get('parent/:id')
+/*  @Get('parent/:id')
   @ApiOperation({summary:'Obtener estudiante por ID'})
   @ApiResponse({status: 200, description: 'Obtener estudiante por ID'})
   @ApiResponse({status: 400, description: 'Estudiante no encontrado'})
   findByParent(@Param('id') id: string) {
     return this.studentsService.findByParent(+id);
-  }
+  }*/
 
   @Patch(':id')
   @ApiOperation({ summary: 'Actualizar estudiante' })

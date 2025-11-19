@@ -1,13 +1,17 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { User, UserRole } from '../users/entities/user.entity';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @ApiOperation({ summary: 'Registrar usuario' })
+  @ApiResponse({ status: 201, description: 'Usuario registrado' })
+  @ApiResponse({ status: 400, description: 'Datos inválidos' })
   register(
     @Body()
     body: {
