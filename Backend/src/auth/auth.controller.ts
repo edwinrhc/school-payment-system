@@ -2,6 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { User, UserRole } from '../users/entities/user.entity';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CreateAuthRegisterDto } from './dto/CreateAuthRegister.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -12,26 +13,20 @@ export class AuthController {
   @ApiOperation({ summary: 'Registrar usuario' })
   @ApiResponse({ status: 201, description: 'Usuario registrado' })
   @ApiResponse({ status: 400, description: 'Datos inválidos' })
-  register(
-    @Body()
-    body: {
-      name: string;
-      email: string;
-      password: string;
-      role?: string;
-    },
-  ) {
+  register(@Body() dto: CreateAuthRegisterDto){
     const role =
-      body.role === 'admin'
-        ? UserRole.ADMIN : UserRole.USER === 'user'
-          ? UserRole.USER : UserRole.PARENT;
+      dto.role === 'admin'
+        ? UserRole.ADMIN
+        : dto.role === 'user'
+        ? UserRole.USER
+        : UserRole.PARENT;
 
-    return this.authService.register(
-      body.name,
-      body.email,
-      body.password,
-      role,
-    );
+    return  this.authService.register(
+      dto.name,
+      dto.email,
+      dto.password,
+      role
+    )
   }
 
   @Post('login')
