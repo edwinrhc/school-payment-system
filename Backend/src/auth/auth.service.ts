@@ -23,7 +23,14 @@ export class AuthService {
       password,
       role,
     );
-    return user;
+
+    const payload =  { sub: user.id, role: user.role }
+
+    return {
+      message: 'Usuario registrado exitosamente',
+      access_token: await this.jwtService.signAsync(payload),
+      user,
+    };
   }
 
   async login(email: string, password: string) {
@@ -36,6 +43,7 @@ export class AuthService {
     const payload = { sub: user.id, role: user.role };
 
     return {
+      message:'Login exitoso',
       access_token: await this.jwtService.signAsync(payload),
       user: {
         id: user.id,
