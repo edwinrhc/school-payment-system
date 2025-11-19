@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { User, UserRole } from '../users/entities/user.entity';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -14,26 +15,19 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'Usuario registrado' })
   @ApiResponse({ status: 400, description: 'Datos inválidos' })
   register(@Body() dto: RegisterDto){
-    const role =
-      dto.role === 'admin'
-        ? UserRole.ADMIN
-        : dto.role === 'user'
-        ? UserRole.USER
-        : UserRole.PARENT;
-
-    return  this.authService.register(
+    return this.authService.register(
       dto.name,
       dto.email,
       dto.password,
-      role
-    )
+      dto.role ?? UserRole.PARENT
+    );
   }
 
   @Post('login')
   @ApiOperation({ summary: 'Iniciar sesión' })
   @ApiResponse({ status: 200, description: 'Login exitoso' })
   @ApiResponse({ status: 401, description: 'Credenciales inválidas' })
-  login(@Body() body: { email: string; password: string }) {
-    return this.authService.login(body.email, body.password);
+  login(@Body() dto: LoginDto) {
+    return this.authService.login(dto.email, dto.password);
   }
 }
