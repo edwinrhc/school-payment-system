@@ -1,11 +1,13 @@
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
   MinLength,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserRole } from '../../users/entities/user.entity';
 
 
 export class RegisterDto {
@@ -38,6 +40,6 @@ export class RegisterDto {
     description: 'Rol del usuario',
   })
   @IsOptional()
-  @IsString()
-  role?: string;
+  @IsEnum(UserRole, { message:' El rol debe ser admin, user o parent '})
+  role?: UserRole;
 }
