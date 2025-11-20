@@ -4,6 +4,8 @@ import { User, UserRole } from '../users/entities/user.entity';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { ForgotPasswordDto } from '../users/dto/ForgotPasswordDto';
+import { ResetPasswordDto } from '../users/dto/ResetPasswordDto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -30,4 +32,15 @@ export class AuthController {
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto.email, dto.password);
   }
+
+  @Post('forgot-password')
+  forgot(@Body() dto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(dto.email);
+  }
+
+  @Post('reset-password')
+  reset(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(dto.token, dto.newPassword);
+  }
+
 }

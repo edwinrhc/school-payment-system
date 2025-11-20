@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -10,6 +19,9 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UsersService } from './users.service';
 import { UserRole } from './entities/user.entity';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { UpdateUserDto } from './dto/UpdateUserDto';
+import { UpdatePasswordDto } from './dto/UpdatePasswordDto';
+import { UpdateStatusDto } from './dto/UpdateStatusDto';
 
 
 @ApiBearerAuth()
@@ -59,6 +71,44 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
+  /**
+   * PATCH /users/:id
+   * @param id
+   * @param dto
+   * @param req
+   */
+  @Patch(':id')
+  updateUser(@Param('id') id: string,@Body() dto: UpdateUserDto,@Req() req) {
+    return this.usersService.updateUser(+id, dto, req.user.id);
+  }
+
+
+  /**
+   * PATCH /users/:id/password
+   * @param id
+   * @param dto
+   * @param req
+   */
+  @Patch(':id/password')
+  updatePassword(@Param('id') id: string,@Body() dto: UpdatePasswordDto,@Req() req){
+    return this.usersService.updatePassword(
+      +id,
+      dto.oldPassword,
+      dto.newPassword,
+      req.user.id,
+    );
+  }
+
+  /**
+   * PATCH /users/:id/status
+   * @param id
+   * @param dto
+   * @param req
+   */
+  @Patch(':id/status')
+  updateStatus(@Param('id') id: string,@Body() dto: UpdateStatusDto,@Req() req,) {
+    return this.usersService.updateStatus(+id, dto.isActive, req.user.id);
+  }
 
 
 
