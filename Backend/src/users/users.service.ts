@@ -7,22 +7,28 @@ import {
 import { User, UserRole } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service';
+import { UpdateUserDto } from './dto/UpdateUserDto';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  // Nota: Solo Login
+  /**
+   * Buscar usuario por email interno
+   * @param email
+   */
   async findByEmailInternal(email: string) {
     return this.prisma.user.findUnique({ where: { email } });
   }
 
-  async createUser(
-    name: string,
-    email: string,
-    password: string,
-    role: UserRole = UserRole.USER,
-  ) {
+  /**
+   * Crear usuario
+   * @param name
+   * @param email
+   * @param password
+   * @param role
+   */
+  async createUser(name: string,email: string,password: string,role: UserRole = UserRole.USER){
     // Validar que el email no exista
     const existing = await this.prisma.user.findUnique({
       where: { email },
@@ -47,6 +53,92 @@ export class UsersService {
     return rest;
   }
 
+
+  /**
+   * Actualizar usuario
+   * @param id
+   * @param dto
+   * @param updatedBy
+   */
+  async updateUser(id: number, dto: UpdateUserDto, updatedBy: number) {
+    const user = await this.prisma.user.findUnique({where:{id}});
+    if(!user) throw new NotFoundException('Usuario no encontrado');
+
+    return this.prisma.user.update({
+      where:{id},
+      data:{
+        ...dto,
+        updatedBy: updatedBy,
+      },
+      select:{
+        id:true,
+        name:true,
+        email:true,
+        role:true,
+        isActive:true,
+        updatedBy:true,
+      },
+    });
+  }
+
+
+  /**
+   * Actualizar contraseña
+   * @param id
+   * @param oldPass
+   * @param newPass
+   * @param updatedBy
+   */
+  async updatePassword(id: number, oldPass: string, newPass: string, updatedBy: number){
+    const user = await this.prisma.user.findUnique({where:{id}});
+    if(!user) throw new NotFoundException('Usuario no encontrado');
+
+    const match = await bcrypt.compare(oldPass,user.password);
+    if(!match) throw new UnauthorizedException('Contraseña actual incorrecta');
+
+    const hash = await bcrypt.hash(newPass,10);
+
+    await this.prisma.user.update({
+      where: {id},
+      data:{
+        password: hash,
+        updatedBy: updatedBy
+      },
+    });
+    return { message: 'Contraseña actualizada correctamente'};
+
+  }
+
+  /**
+   * Actualizar estado de usuario
+   * @param id
+   * @param isActive
+   * @param updatedBy
+   */
+  async  updateStatus(id: number, isActive: boolean, updatedBy: number){
+    const user = await this.prisma.user.findUnique({where:{id}});
+    if(!user) throw new NotFoundException('Usuario no encontrado');
+
+    return this.prisma.user.update({
+      where: { id },
+      data: {
+        isActive,
+        updatedBy,
+      },
+      select: {
+        id: true,
+        email: true,
+        isActive: true,
+        updatedAt: true,
+      },
+    });
+
+  }
+
+
+  /**
+   * Listar usuarios
+   */
   findAll() {
     return this.prisma.user.findMany({
       select: {
@@ -61,7 +153,10 @@ export class UsersService {
     });
   }
 
-  //Nota: Uso general sin password
+  /**
+   * Buscar usuario por email
+   * @param email
+   */
   findByEmail(email: string) {
     return this.prisma.user.findUnique({
       where: { email },
@@ -78,7 +173,10 @@ export class UsersService {
     });
   }
 
-  // Buscar por ID
+  /**
+   * Obtener usuario por ID
+   * @param id
+   */
   async findOne(id: number) {
     const user = await this.prisma.user.findUnique({
       where: { id },
@@ -96,4 +194,8 @@ export class UsersService {
 
     return user;
   }
+
+
+
+
 }
