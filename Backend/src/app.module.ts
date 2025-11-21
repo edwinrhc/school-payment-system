@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { StudentsModule } from './students/students.module';
 import { ConfigModule } from '@nestjs/config';
+import { MailModule } from './mail/mail.module';
 
 
 
@@ -17,7 +18,8 @@ import { ConfigModule } from '@nestjs/config';
     AuthModule,
     UsersModule,
     DashboardModule,
-    StudentsModule
+    StudentsModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

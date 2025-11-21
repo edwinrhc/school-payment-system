@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserRole } from '../users/entities/user.entity';
 import { PrismaService } from '../prisma/prisma.service';
-import { MailerService } from '@nestjs-modules/mailer';
+import { MailService } from '../mail/mail.service';
 import * as crypto from 'crypto';
 
 @Injectable()
@@ -17,8 +17,9 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private prisma: PrismaService,
-    private mailerService: MailerService
-  ) {}
+    private mailService: MailService,
+  ) {
+  }
 
   /**
    * Registrar usuario
@@ -27,7 +28,7 @@ export class AuthService {
    * @param password
    * @param role
    */
-  async register(name: string, email: string, password: string,role: UserRole = UserRole.USER){
+  async register(name: string, email: string, password: string, role: UserRole = UserRole.USER) {
     const user = await this.usersService.createUser(
       name,
       email,
@@ -75,9 +76,9 @@ export class AuthService {
    * Olvidar contraseña
    * @param email
    */
-  async forgotPassword(email: string){
+  async forgotPassword(email: string) {
     const user = await this.usersService.findByEmailInternal(email);
-     if(!user) throw new UnauthorizedException('Usuario no encontrado');
+    if (!user) throw new UnauthorizedException('Usuario no encontrado');
 
     const token = crypto.randomBytes(32).toString('hex');
     const expiresAt = new Date(Date.now() + 1000 * 60 * 30); // 30 minutos
@@ -89,15 +90,12 @@ export class AuthService {
         resetTokenExpiresAt: expiresAt,
       },
     });
-    await this.mailerService.sendMail({
-      to: email,
-      from: 'no-reply@sistema.com',
-      subject: 'Recuperación de contraseña',
-      html: `<p>Haz clic en el enlace para resetear tu contraseña:</p>
-           <a href="http://localhost:3000/auth/reset-password?token=${token}">
-           Resetear
-           </a>`,
-    });
+    await this.mailService.sendTestEmail(email, 'Recuperación de contraseña', `
+    <p>Haz clic en el enlace para resetear tu contraseña:</p>
+    <a href="http://localhost:3000/auth/reset-password?token=${token}">
+      Resetear
+    </a>
+  `);
 
     return { message: 'Email enviado con instrucciones' };
 
@@ -132,7 +130,6 @@ export class AuthService {
 
     return { message: 'Contraseña restablecida correctamente' };
   }
-
 
 
 }

@@ -5,30 +5,19 @@ import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PrismaService } from '../prisma/prisma.service';
-import { MailerModule } from '@nestjs-modules/mailer';
+import { MailModule } from '../mail/mail.module';
+
 
 @Module({
   imports: [
     UsersModule,
+    MailModule,
     JwtModule.register({
       global:true,
       secret: 'SUPER_SECRET_KEY',
       signOptions: { expiresIn: '2h' },
     }),
 
-    MailerModule.forRoot({
-      transport: {
-        host: 'smtp.mailtrap.io',
-        port: 2525,
-        auth: {
-          user: process.env.MAILTRAP_USER,
-          pass: process.env.MAILTRAP_PASS,
-        },
-      },
-      defaults: {
-        from: '"Soporte" <soporte@sistema.com>',
-      },
-    }),
   ],
 
   controllers: [AuthController],
