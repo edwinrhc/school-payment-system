@@ -1,5 +1,9 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=WebStorm
+### Metodo de login del usuario
+## Ejemplo 01
+POST http://localhost:3000/auth/login
+Content-Type: application/json
 
-###
+{
+  "email": "edwin@correo.com",
+  "password": "123456"
+}

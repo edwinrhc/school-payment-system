@@ -1,5 +1,76 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=WebStorm
+### Metodo de registrar usuario
+## Ejemplo 01
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Edwin",
+  "email": "edwin@correo.com",
+  "password": "123456",
+  "role":"admin"
+}
+###
+##Ejemplo 02
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+"name": "Ricardo",
+"email": "ricardo@correo.com",
+"password": "123456",
+"role":"admin"
+}
 
 ###
+##Ejemplo 03
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Dayiro",
+  "email": "dayiro@correo.com",
+  "password": "123456",
+  "role":"user"
+}
+
+
+###
+##Ejemplo 04
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Yassiel",
+  "email": "yassiel@correo.com",
+  "password": "123456",
+  "role":"user"
+}
+
+
+###
+##Ejemplo 05
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Anali",
+  "email": "anali@correo.com",
+  "password": "123456",
+  "role":"admin"
+}
+
+
+###
+##Ejemplo 06
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Mathias",
+  "email": "mathias@correo.com",
+  "password": "123456",
+  "role":"user"
+}
+
+
+

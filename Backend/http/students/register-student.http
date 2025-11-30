@@ -1,5 +1,14 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=WebStorm
+### Metodo de registrar estudiante
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NDUyODIwOSwiZXhwIjoxNzY0NTM1NDA5fQ.tW1ugPtEkbLXL-L0s0iyL0YNm_1gQBQK36Ixez9EArY
 
-###
+## Ejemplo 01
+POST http://localhost:3000/students
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Dafne Yassiel",
+  "lastName":"Huamanttupa",
+  "grade": "4to grado",
+  "parentId": 1
+}
