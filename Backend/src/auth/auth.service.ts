@@ -90,12 +90,14 @@ export class AuthService {
         resetTokenExpiresAt: expiresAt,
       },
     });
-    await this.mailService.sendTestEmail(email, 'Recuperación de contraseña', `
-    <p>Haz clic en el enlace para resetear tu contraseña:</p>
-    <a href="http://localhost:3000/auth/reset-password?token=${token}">
-      Resetear
-    </a>
-  `);
+
+    const html = this.mailService.getResetPasswordTemplate(token);
+
+    await this.mailService.sendEmail(
+      email,
+      'Recuperación de contraseña',
+      html
+    );
 
     return { message: 'Email enviado con instrucciones' };
 
