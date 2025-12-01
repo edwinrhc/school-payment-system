@@ -1,0 +1,14 @@
+
+
+### PATCH actualizar datos del usuario
+PATCH http://localhost:3000/users/3
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Edwin Actualizado",
+  "email": "edwin.actualizado@example.com",
+  "role": "admin",
+  "isActive": true
+}
+###
