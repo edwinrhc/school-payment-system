@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE `student` ALTER COLUMN `typeDoc` DROP DEFAULT,
-    ALTER COLUMN `numDoc` DROP DEFAULT;
