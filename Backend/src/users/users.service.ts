@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -7,7 +8,7 @@ import {
 import { User, UserRole } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service';
-import { UpdateUserDto } from './dto/UpdateUserDto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -61,8 +62,25 @@ export class UsersService {
    * @param updatedBy
    */
   async updateUser(id: number, dto: UpdateUserDto, updatedBy: number) {
-    const user = await this.prisma.user.findUnique({where:{id}});
-    if(!user) throw new NotFoundException('Usuario no encontrado');
+
+    const existingUser = await this.prisma.user.findUnique({
+      where:{id},
+    });
+
+    if(!existingUser){
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    // Validar email único
+    if(dto.email){
+      const emailExists = await this.prisma.user.findUnique({
+        where:{email:dto.email}
+      });
+
+      if(emailExists && emailExists.id !== id){
+        throw new BadRequestException('El email ya está registrado');
+      }
+    }
 
     return this.prisma.user.update({
       where:{id},
