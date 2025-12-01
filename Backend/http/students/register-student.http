@@ -5,8 +5,10 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "firstName": "Dafne Yassiel",
-  "lastName":"Huamanttupa",
-  "grade": "4to grado",
+  "firstName": "Dayiro",
+  "lastName":"Alvis",
+  "typeDoc": "DNI",
+  "numDoc": "45438154",
+  "grade": "5to grado",
   "parentId": 1
 }
