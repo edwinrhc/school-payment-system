@@ -1,0 +1,6 @@
+
+### Metodo de listar todos los usuarios
+## Ejemplo 01
+GET http://localhost:3000/users/
+Authorization: Bearer {{token}}
+
