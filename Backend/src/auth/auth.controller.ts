@@ -5,7 +5,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { ForgotPasswordDto } from '../users/dto/ForgotPasswordDto';
-import { ResetPasswordDto } from '../users/dto/ResetPasswordDto';
+import { ResetPasswordDto } from '../users/dto/reset.password.Dto';
 
 @ApiTags('Auth')
 @Controller('auth')
