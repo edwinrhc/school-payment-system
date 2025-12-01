@@ -12,6 +12,15 @@ export class CreateStudentDto {
   @IsNotEmpty({message:'El apellido es obligatorio'})
   lastName: string;
 
+  @ApiProperty({ example: 'DNI', description: 'Tipo de documento' })
+  @IsString({message:'EL tipo de documento debe ser un texto'})
+  @IsNotEmpty({message:'El tipo de documento es obligatorio'})
+  typeDoc: string;
+
+  @ApiProperty({example: '01234567', description: 'Ingrese número de documento'})
+  @IsNotEmpty({message:'EL número de documento es obligatorio'})
+  numDoc: string;
+
   @ApiProperty({ example: '6to A', description: 'Grado y sección' })
   @IsString({message:'EL grado debe ser un texto'})
   @IsNotEmpty({message:'El grado es obligatorio'})
