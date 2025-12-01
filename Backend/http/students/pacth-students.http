@@ -1,0 +1,15 @@
+
+
+### PATCH actualizar datos del usuario
+PATCH http://localhost:3000/students/3
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "firstName": "Yassiel Dafne",
+  "lastName": "Alvis",
+  "typeDoc": "DNI",
+  "numDoc": "32165487",
+  "grade": "4to grado"
+}
+###
