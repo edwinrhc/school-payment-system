@@ -1,8 +1,5 @@
 ## Buscar usuario por correo
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NDUyODIwOSwiZXhwIjoxNzY0NTM1NDA5fQ.tW1ugPtEkbLXL-L0s0iyL0YNm_1gQBQK36Ixez9EArY
-
-
 ### GET request to example server
 GET http://localhost:3000/dashboard/
 Authorization: Bearer {{token}}
