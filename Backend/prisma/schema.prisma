@@ -7,12 +7,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  USER
+  PARENT
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  CANCELED
+}
+
 model User {
   id       Int    @id @default(autoincrement())
   name     String
   email    String @unique
   password String
-  role     String @default("parent")
+
+  // Usamos el enum UserRole
+  role UserRole @default(PARENT)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -20,8 +34,10 @@ model User {
   updatedBy Int?
   isActive  Boolean  @default(true)
 
+  // Relación: un padre puede tener varios estudiantes
   students Student[]
 
+  // Recuperación de contraseña
   resetToken          String? // Para recuperar contraseña
   resetTokenExpiresAt DateTime? // Caducidad del token
 }
@@ -33,19 +49,26 @@ model Student {
   typeDoc   String
   numDoc    String @unique
   grade     String // Ej: "3ro A" o "Secundaria 2"
-  parentId  Int
 
-  parent   User      @relation(fields: [parentId], references: [id])
+  parentId Int
+  parent   User @relation(fields: [parentId], references: [id])
+
   payments Payment[]
 }
 
 model Payment {
-  id        Int       @id @default(autoincrement())
-  studentId Int
-  amount    Decimal   @db.Decimal(10, 2)
-  month     String // Ej: "Marzo 2025"
-  status    String    @default("pending") // pending | paid
-  paidAt    DateTime?
+  id Int @id @default(autoincrement())
 
-  student Student @relation(fields: [studentId], references: [id])
+  studentId Int
+  student   Student @relation(fields: [studentId], references: [id])
+
+  amount Decimal @db.Decimal(10, 2)
+  month  String // Ej: "Marzo 2025"
+
+  status PaymentStatus @default(PENDING) // pending | paid
+
+  paidAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([studentId])
 }
