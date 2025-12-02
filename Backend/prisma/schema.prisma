@@ -30,6 +30,8 @@ model Student {
   id        Int    @id @default(autoincrement())
   firstName String
   lastName  String
+  typeDoc   String
+  numDoc    String @unique
   grade     String // Ej: "3ro A" o "Secundaria 2"
   parentId  Int
 

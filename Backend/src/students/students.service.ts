@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateStudentDto } from './dto/CreateStudentDto';
 import { UpdateStudentDto } from './dto/UpdateStudentDto';
@@ -30,8 +30,31 @@ export class StudentsService {
   }
 
   async update(id: number, data: UpdateStudentDto){
-    const exists = await this.prisma.student.findUnique({where:{id}});
-    if(!exists) throw new NotFoundException('Student not found');
+    const exists = await this.prisma.student.findUnique({ where: { id } });
+    if(!exists) throw new NotFoundException('Estudiante no encontrado');
+
+    // Validar duplicado de documento
+    if(data.numDoc){
+      const numDocExists = await this.prisma.student.findUnique({
+        where: {
+          numDoc:data.numDoc
+        }
+      });
+
+      // Evitar choque con el mismo registro
+      if (numDocExists && numDocExists.id !== id) {
+        throw new BadRequestException('El número de documento ya está registrado');
+      }
+
+    }
+
+    // Validar typeDoc
+    if(data.typeDoc){
+      const validDocs = ['DNI','CE','PASSPORT'];
+      if(!validDocs.includes(data.typeDoc)){
+        throw new BadRequestException('Tipo de documento inválido');
+      }
+    }
 
     return this.prisma.student.update({
       where:{id},

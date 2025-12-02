@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Query,
   Req,
@@ -19,10 +20,11 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UsersService } from './users.service';
 import { UserRole } from './entities/user.entity';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { UpdateUserDto } from './dto/UpdateUserDto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdatePasswordDto } from './dto/UpdatePasswordDto';
 import { UpdateStatusDto } from './dto/UpdateStatusDto';
 
+import type { Request } from 'express';
 
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard,RolesGuard)
@@ -78,7 +80,7 @@ export class UsersController {
    * @param req
    */
   @Patch(':id')
-  updateUser(@Param('id') id: string,@Body() dto: UpdateUserDto,@Req() req) {
+  updateUser(@Param('id', ParseIntPipe) id: string, @Body() dto: UpdateUserDto, @Req() req: Request) {
     return this.usersService.updateUser(+id, dto, req.user.id);
   }
 
