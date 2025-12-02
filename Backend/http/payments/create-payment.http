@@ -1,0 +1,11 @@
+### Crear pago para un alumno (ADMIN)
+POST http://localhost:3000/payments
+Content-Type:  application/json
+Authorization: Bearer {{admin_token}}
+
+{
+  "studentId": 1,
+  "amount": 250.50,
+  "month": "Julio 2025"
+}
+###

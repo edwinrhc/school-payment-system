@@ -1,0 +1,4 @@
+### Listar pagos de un alumno
+GET http://localhost:3000/payments/student/1
+Authorization: Bearer {{parent_token}}
+###
