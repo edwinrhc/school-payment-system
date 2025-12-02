@@ -1,14 +1,21 @@
-export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
-  PARENT = 'parent',
+import { ApiProperty } from '@nestjs/swagger';
+
+export enum ApiUserRole {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+  PARENT = 'PARENT',
 }
 
-export class User {
-  id: string;
+export class UserEntity {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
   name: string;
+
+  @ApiProperty()
   email: string;
-  password: string;
-  role: UserRole;
-  createdAt: Date = new Date();
+
+  @ApiProperty({ enum: ['ADMIN', 'USER', 'PARENT'] })
+  role: string; // o directamente 'ADMIN' | 'USER' | 'PARENT'
 }
