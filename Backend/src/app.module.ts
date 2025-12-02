@@ -7,6 +7,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { StudentsModule } from './students/students.module';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './mail/mail.module';
+import { PaymentsModule } from './payments/payments.module';
 
 
 
@@ -20,6 +21,7 @@ import { MailModule } from './mail/mail.module';
     DashboardModule,
     StudentsModule,
     MailModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
