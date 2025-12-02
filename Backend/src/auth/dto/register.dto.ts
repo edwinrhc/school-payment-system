@@ -7,7 +7,9 @@ import {
   MinLength,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserRole } from '../../users/entities/user.entity';
+import { UserRole } from '@prisma/client';
+import { Transform } from 'class-transformer';
+
 
 
 export class RegisterDto {
@@ -40,6 +42,7 @@ export class RegisterDto {
     description: 'Rol del usuario',
   })
   @IsOptional()
+  @Transform(({ value }) => value?.toUpperCase()) // "admin" -> "ADMIN"
   @IsEnum(UserRole, { message:' El rol debe ser admin, user o parent '})
   role?: UserRole;
 }
