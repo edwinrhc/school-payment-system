@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserRole } from '../../users/entities/user.entity';
+import { UserRole } from '@prisma/client';
 
 export class AuthResponseDto {
   @ApiProperty({

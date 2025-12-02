@@ -19,7 +19,7 @@ import {
 } from '@nestjs/swagger';
 import { RolesGuard } from '../auth/guards/RolesGuard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { UserRole } from '../users/entities/user.entity';
+import { UserRole } from '@prisma/client';
 import { Roles } from '../auth/decorators/roles.decorator';
 
 
