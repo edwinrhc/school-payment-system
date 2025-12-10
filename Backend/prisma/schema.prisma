@@ -62,6 +62,9 @@ model Payment {
   studentId Int
   student   Student @relation(fields: [studentId], references: [id])
 
+  provider   String // "STRIPE", "CULQI", etc.
+  externalId String? // ID de la transacción en la pasarela
+
   amount Decimal @db.Decimal(10, 2)
   month  String // Ej: "Marzo 2025"
 
