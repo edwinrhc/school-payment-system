@@ -1,11 +1,11 @@
 import {
-  ConflictException,
+  ConflictException, ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
-import { PaymentStatus } from '@prisma/client';
+import { PaymentStatus, UserRole } from '@prisma/client';
 
 @Injectable()
 export class PaymentsService {
@@ -77,15 +77,21 @@ export class PaymentsService {
     });
 
     // Devuelves cada alumno con sus pagos
-    return students;
+    return students.map((s) => ({
+      studentId: s.id,
+      studentName: `${s.firstName} ${s.lastName}`,
+      grade: s.grade,
+      payments: s.payments,
+    }));
   }
 
   /**
    * Marcar un pago como pagado
    */
-  async markAsPaid(paymentId: number) {
+  async markAsPaid(paymentId: number, currentUserId: number, currentRole: UserRole) {
     const payment = await this.prisma.payment.findUnique({
       where: { id: paymentId },
+      include: { student: true },
     });
 
     if (!payment) {
@@ -94,6 +100,11 @@ export class PaymentsService {
 
     if (payment.status === PaymentStatus.PAID) {
       throw new ConflictException('El pago ya está marcado como pagado');
+    }
+
+    // Si es PARENT, valide que el alumno sea suyo
+    if(currentRole === UserRole.PARENT && payment.student.parentId !== currentUserId){
+      throw new ForbiddenException('No puedes pagar un alumno que no es tu hijo')
     }
 
     return this.prisma.payment.update({
