@@ -14,9 +14,11 @@ import { PaymentsService } from './payments.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '@prisma/client';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
 @ApiTags('payments')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('payments')
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
@@ -48,9 +50,9 @@ export class PaymentsController {
    */
   @Get('me')
   @ApiOperation({ summary: 'Listar pagos de los hijos del padre logueado' })
-  getMyPayments(@Req() req) {
-    const parentId = req.user.id;
-    return this.paymentsService.getPaymentsByParent(parentId);
+  @Roles(UserRole.PARENT)
+  getMyPayments(@CurrentUser() user) {
+    return this.paymentsService.getPaymentsByParent(user.id);
   }
 
   /**
@@ -58,7 +60,8 @@ export class PaymentsController {
    */
   @Patch(':id/pay')
   @ApiOperation({ summary: 'Marcar un paco como pagado' })
-  markAskPaid(@Param('id') id: string) {
-    return this.paymentsService.markAsPaid(+id);
+  @Roles(UserRole.ADMIN, UserRole.PARENT)
+  markAskPaid(@Param('id') id: string, @CurrentUser() user) {
+    return this.paymentsService.markAsPaid(+id, user.id, user.role);
   }
 }
