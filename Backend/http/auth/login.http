@@ -1,9 +1,19 @@
 ### Metodo de login del usuario
-## Ejemplo 01
+## Ejemplo 01 ADMIN
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
   "email": "edwin@correo.com",
   "password": "123456"
+}
+
+###
+## Ejemplo 02 PARENT
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+"email": "dafne@correo.com",
+"password": "123456"
 }

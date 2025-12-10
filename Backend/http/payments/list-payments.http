@@ -1,4 +1,4 @@
 ### GET Listar pagos de los hijos del padre logueado
 GET http://localhost:3000/payments/me
-Authorization: Bearer {{admin_token}}
+Authorization: Bearer {{parent_token}}
 ###

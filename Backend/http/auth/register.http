@@ -72,5 +72,17 @@ Content-Type: application/json
   "role":"user"
 }
 
+###
+##Ejemplo 07
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Dafne",
+  "email": "dafne@correo.com",
+  "password": "123456",
+  "role":"parent"
+}
+
 
 
