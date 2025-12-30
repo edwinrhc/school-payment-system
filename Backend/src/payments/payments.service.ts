@@ -47,6 +47,7 @@ export class PaymentsService {
         amount,
         month,
         status: PaymentStatus.PENDING,
+        provider: 'MANUAL',
       },
     });
   }
