@@ -24,6 +24,15 @@ export class AuthService {
       );
   }
 
+  register(data: {
+    name: string;
+    email: string;
+    password: string;
+    role: string;
+  }){
+    return this.http.post<any>(`${this.API_URL}/register`, data);
+  }
+
   logout() {
     localStorage.clear();
   }
