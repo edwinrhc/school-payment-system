@@ -49,7 +49,7 @@ export class RegisterComponent {
          }, 1500);
        },
       error: (err) => {
-         this.error = err?.error?.message || 'Error al registrar usuairo';
+         this.error = err?.error?.message || 'Error al registrar usuario';
          this.loading = false;
       }
     });

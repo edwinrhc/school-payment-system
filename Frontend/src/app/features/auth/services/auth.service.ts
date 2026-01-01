@@ -30,7 +30,13 @@ export class AuthService {
     password: string;
     role: string;
   }){
-    return this.http.post<any>(`${this.API_URL}/register`, data);
+    return this.http.post<any>(`${this.API_URL}/register`, data)
+      .pipe(
+        tap(response => {
+          localStorage.setItem('token', response.access_token);
+          localStorage.setItem('user', JSON.stringify(response.user));
+        })
+      );
   }
 
   logout() {
