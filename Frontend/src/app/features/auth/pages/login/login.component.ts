@@ -40,4 +40,7 @@ export class LoginComponent {
     });
   }
 
+  irARegistro(){
+    return null;
+  }
 }
