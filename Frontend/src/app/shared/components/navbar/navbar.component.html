@@ -1,9 +1,20 @@
 <nav class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center">
   <span class="font-bold text-lg">SchoolPay</span>
 
-  <div class="space-x-4">
+  <div class="space-x-4 items-center">
     <a routerLink="/" class="hover:underline">Inicio</a>
-    <a routerLink="/login" class="hover:underline">Login</a>
+    <a *ngIf="!authService.isAuthenticated()"
+      routerLink="/login"
+       class="hover:underline">
+      Login
+    </a>
+    <button
+    *ngIf="authService.isAuthenticated()"
+    (click)="logout()"
+    class="hover:underline text-red-400">
+      Cerrar sesión
+    </button>
+
   </div>
 
 </nav>
