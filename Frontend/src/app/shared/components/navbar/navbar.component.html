@@ -1,7 +1,41 @@
 <nav class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center">
   <span class="font-bold text-lg">SchoolPay</span>
 
-  <div class="space-x-4 items-center">
+  <div class="flex items-center gap-4">
+
+<!--    ADMIN -->
+    <ng-container *ngIf="isAdmin">
+      <a routerLink="/admin" class="hover:underline">Dashboard</a>
+      <a routerLink="/admin/users" class="hover:underline">Usuarios</a>
+      <a routerLink="/admin/reports" class="hover:underline">Reportes</a>
+    </ng-container>
+
+<!--    SUPPORT O USER -->
+    <ng-container *ngIf="isSupport">
+      <a routerLink="/support" class="hover:underline">Dashboard</a>
+      <a routerLink="/support/debts" class="hover:underline">Deudas</a>
+      <a routerLink="/support/payments" class="hover:underline">Pagos</a>
+    </ng-container>
+
+    <!-- PARENT -->
+    <ng-container *ngIf="isParent">
+      <a routerLink="/parent" class="hover:underline">Inicio</a>
+      <a routerLink="/parent/payments" class="hover:underline">Mis Pagos</a>
+    </ng-container>
+
+    <!-- Logout -->
+    <button
+      (click)="logout()"
+      class="ml-4 bg-red-600 hover:bg-red-700 px-3 py-1 rounded"
+    >
+      Cerrar sesión
+    </button>
+
+  </div>
+
+
+
+<!--  <div class="space-x-4 items-center">
     <a routerLink="/" class="hover:underline">Inicio</a>
     <a *ngIf="!authService.isAuthenticated()"
       routerLink="/login"
@@ -15,6 +49,6 @@
       Cerrar sesión
     </button>
 
-  </div>
+  </div>-->
 
 </nav>

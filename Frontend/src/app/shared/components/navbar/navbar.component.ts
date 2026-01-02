@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../../features/auth/services/auth.service';
@@ -10,14 +10,29 @@ import {AuthService} from '../../../features/auth/services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+
+  user: any;
+
+  isAdmin = false;
+  isSupport = false;
+  isParent = false;
 
   constructor(
     public authService: AuthService,
     private router: Router,
-              ) {}
+  ) {
+  }
 
-  logout(){
+  ngOnInit(): void {
+    this.user = this.authService.getUser();
+    console.log(this.user);
+    this.isAdmin = this.user?.role === 'ADMIN';
+    this.isSupport = this.user?.role === 'USER';
+    this.isParent = this.user?.role === 'PARENT';
+  }
+
+  logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
