@@ -1,4 +1,144 @@
-<h1 class="text-2xl font-bold mb-4">Bienvenido</h1>
-<p class="text-gray-600">
-  Sistema de pagos escolares
-</p>
+<div class="p-8 bg-slate-50 min-h-screen font-sans text-slate-900">
+
+  <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+    <div>
+      <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Bienvenido, {{ user?.name | uppercase }}</h1>
+      <p class="text-slate-500 flex items-center gap-2 mt-1">
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+        </span>
+        Ciclo Académico 2026 - Activo
+      </p>
+    </div>
+    <button class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl font-semibold transition-all shadow-lg shadow-blue-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      Realizar Nuevo Pago
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <div class="group bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pagos pendientes</p>
+          <p class="text-3xl font-black text-red-600 mt-2">S/ 450.00</p>
+        </div>
+        <div class="bg-red-50 p-3 rounded-2xl text-red-500 group-hover:bg-red-500 group-hover:text-white transition-colors">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="group bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pagos realizados</p>
+          <p class="text-3xl font-black text-emerald-600 mt-2">S/ 1,200</p>
+        </div>
+        <div class="bg-emerald-50 p-3 rounded-2xl text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="group bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Próximo límite</p>
+          <p class="text-3xl font-black text-slate-800 mt-2">15 ENE</p>
+        </div>
+        <div class="bg-amber-50 p-3 rounded-2xl text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="group bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Hijos matriculados</p>
+          <p class="text-3xl font-black text-blue-600 mt-2">02</p>
+        </div>
+        <div class="bg-blue-50 p-3 rounded-2xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+      <div class="p-6 border-b border-slate-50 flex justify-between items-center">
+        <h3 class="font-bold text-lg text-slate-800">Últimos Pagos Realizados</h3>
+        <a href="#" class="text-blue-600 text-sm font-semibold hover:underline">Ver todo</a>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+          <tr class="bg-slate-50/50">
+            <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Concepto</th>
+            <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Fecha</th>
+            <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-center">Estado</th>
+            <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-right">Monto</th>
+          </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-sm">
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="px-6 py-4 font-medium">Pensión - Diciembre</td>
+            <td class="px-6 py-4 text-slate-500">10/12/2025</td>
+            <td class="px-6 py-4 text-center">
+              <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">Completado</span>
+            </td>
+            <td class="px-6 py-4 text-right font-bold font-mono">S/ 600.00</td>
+          </tr>
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="px-6 py-4 font-medium">Cuota de Materiales</td>
+            <td class="px-6 py-4 text-slate-500">05/11/2025</td>
+            <td class="px-6 py-4 text-center">
+              <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">Completado</span>
+            </td>
+            <td class="px-6 py-4 text-right font-bold font-mono">S/ 150.00</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+      <h3 class="font-bold text-lg text-slate-800 mb-6">Mis Alumnos</h3>
+      <div class="space-y-6">
+        <div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100">
+          <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">BU</div>
+          <div class="flex-1">
+            <p class="font-bold text-slate-800">Boruto Uzumaki</p>
+            <p class="text-xs text-slate-500 leading-none mt-1">5to Grado Secundaria</p>
+          </div>
+          <button class="p-2 hover:bg-white rounded-lg text-slate-400 hover:text-blue-600 shadow-sm border border-transparent hover:border-slate-100 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        <div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition-all border border-transparent hover:border-slate-100">
+          <div class="h-12 w-12 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold">HU</div>
+          <div class="flex-1">
+            <p class="font-bold text-slate-800">Himawari Uzumaki</p>
+            <p class="text-xs text-slate-500 leading-none mt-1">2do Grado Primaria</p>
+          </div>
+          <button class="p-2 hover:bg-white rounded-lg text-slate-400 hover:text-blue-600 shadow-sm border border-transparent hover:border-slate-100 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
