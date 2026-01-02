@@ -28,7 +28,6 @@ export class AuthService {
     name: string;
     email: string;
     password: string;
-    role: string;
   }){
     return this.http.post<any>(`${this.API_URL}/register`, data)
       .pipe(

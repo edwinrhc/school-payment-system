@@ -16,7 +16,7 @@ export class RegisterComponent {
   name = '';
   email = '';
   password = '';
-  role = 'user';
+
 
   loading = false;
   error = '';
@@ -37,7 +37,6 @@ export class RegisterComponent {
       name: this.name,
       email: this.email,
       password: this.password,
-      role: this.role,
     }).subscribe({
        next: () => {
          this.success = 'Usuario registrado correctamente';
