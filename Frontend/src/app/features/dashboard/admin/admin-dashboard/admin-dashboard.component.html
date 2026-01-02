@@ -1,0 +1,35 @@
+<div class="p-8 bg-slate-50 min-h-screen">
+
+  <div class="bg-white rounded-xl p-6 shadow border mb-6">
+    <h1 class="text-2xl font-bold text-slate-800">
+      Panel Administrativo
+    </h1>
+    <p class="text-slate-500 mt-1">
+      Bienvenido, {{ user?.name }}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+    <div class="bg-white p-6 rounded-xl shadow border">
+      <p class="text-sm text-slate-500">Usuarios registrados</p>
+      <p class="text-3xl font-bold text-blue-600 mt-2">24</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow border">
+      <p class="text-sm text-slate-500">Alumnos</p>
+      <p class="text-3xl font-bold text-emerald-600 mt-2">58</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow border">
+      <p class="text-sm text-slate-500">Pagos pendientes</p>
+      <p class="text-3xl font-bold text-red-600 mt-2">12</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow border">
+      <p class="text-sm text-slate-500">Pagos del mes</p>
+      <p class="text-3xl font-bold text-slate-800 mt-2">S/ 8,450</p>
+    </div>
+
+  </div>
+</div>
