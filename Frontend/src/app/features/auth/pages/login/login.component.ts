@@ -31,7 +31,14 @@ export class LoginComponent {
 
     this.authService.login(this.email, this.password).subscribe({
       next: () => {
-        this.router.navigate(['/']);
+        // this.router.navigate(['/']);
+        const user = this.authService.getUser();
+
+        if(user.role === 'ADMIN'){
+          this.router.navigate(['/admin']);
+        } else{
+          this.router.navigate(['/']);
+        }
       },
       error: () => {
         this.error = 'Credenciales inválidas';
